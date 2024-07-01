@@ -1,11 +1,11 @@
 #Test Input images
-tests/imgs/
+test_imgs
 #Test Output
 output_images
 #ML models
 *.pt
 *.safetensors
-models/downloads/
+UniversalAdMute/models/downloads/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
