@@ -1,3 +1,12 @@
+#Test Input images
+tests/imgs/
+#Test Output
+output_images
+#ML models
+*.pt
+*.safetensors
+models/downloads/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
