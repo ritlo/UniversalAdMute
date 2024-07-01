@@ -1,4 +1,4 @@
-from UniversalAdMute.models import mobileclipS2
+from UniversalAdMute.models.mobileclipS2 import mobileclip_s2
 
-mobileclipS2.mobileclip_s2.load_model()
-mobileclipS2.mobileclip_s2.infer()
+model = mobileclip_s2()
+model.infer2()

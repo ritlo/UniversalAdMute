@@ -1,0 +1,1 @@
+from .models import mobileclipS2
