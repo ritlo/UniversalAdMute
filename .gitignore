@@ -1,7 +1,6 @@
-#Test Input images
+#Test images
 test_imgs
-#Test Output
-output_images
+
 #ML models
 *.pt
 *.safetensors
