@@ -14,7 +14,7 @@ while True:
     if probs[1] > 51 and audioCont.isUnmuted == False:
         audioCont.unmute()
 
-    elif probs[0] > 50:
+    elif probs[0] > 50 and audioCont.isUnmuted == True:
         audioCont.mute()
 
     sleep(1)
