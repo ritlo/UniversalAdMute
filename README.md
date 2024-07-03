@@ -1,10 +1,23 @@
 # UniversalAdMute
-Using vision models to automatically mute sports streams during advertisements
 
-1. Send a screencapture to a vision LLM (CLIP, YOLOV5, EFFICENTNET, potentially custom trained model) every few seconds for processing.
-2. Using a preset (for football/soccer, vision tags can include "football, soccer, fifa, uefa, world cup, green pitch") for a specific sport and finding probabilities of an advertisement break starting.
-3. Toggling the OS/Browser mute command according to probabilities.
-4. CLIP is computationally demanding, other pretrained models, even CLIP will occasionally fail in classifying, need to implement newer, better vision models as they release, end-goal being training our own.
-5. Some platforms require DRM circumvention.
-6. Possibly better ways to detect ads per platforms, such as any changes in browser.
-7. Other detection methods: Sound, the sports franchise/tournament live feed logo
+Automatically mute streams using OpenCLip models, currently implemented to work with Apple's MobileCLIP-S2-OpenCLIP. No notable load when running on a Ryzen 7 4800HS/GTX 1650 4GB/40GB RAM Zephyrus G14. Every second a screenshot is captured and sent to the model, which calculates it's similarity between `'Television tv advertisement break'` and `'football soccer fifa uefa match tv sports broadcast'`. Using the pycaw library, the active audio device is muted and un-muted according to defined thresholds. Usable on CPU however a longer interval would be desirable.
+
+## Installation
+Currently only implemented and tested on Windows. However, only the AudioController module is platform specific.
+### For CUDA (NVIDIA GPUS)
+`pip install -r requirements.txt`
+
+### For Others
+`pip install -r requirements-cpu.txt`
+
+
+## Dependencies:
+```comtypes==1.4.4
+open_clip_torch==2.24.0
+Pillow==10.4.0
+pycaw==20240210
+torch==2.3.1+cu121
+```
+
+
+
