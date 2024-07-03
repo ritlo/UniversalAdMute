@@ -1,6 +1,7 @@
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
+
 class AudioController:
 
     def __init__(self):
@@ -8,9 +9,8 @@ class AudioController:
         self.interface = self.devices.Activate(
             IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
         self.volume = self.interface.QueryInterface(IAudioEndpointVolume)
-        self.muteVolume=self.volume.GetMute()
-        self.currentVolume=self.volume.GetMasterVolumeLevelScalar()
-        print(self.currentVolume)
+        self.muteVolume = self.volume.GetMute()
+        self.currentVolume = self.volume.GetMasterVolumeLevelScalar()
         if self.currentVolume > 0:
             self.isUnmuted = True
         else:
@@ -26,12 +26,8 @@ class AudioController:
         self.volume.SetMasterVolumeLevelScalar(0.0, None)
         self.isUnmuted = False
         print("Muting")
-        print(self.isUnmuted)
 
     def unmute(self):
         self.setVolume(self.currentVolume)
         self.isUnmuted = True
         print("Unmuting")
-        print(self.isUnmuted)
-    
-

@@ -18,20 +18,17 @@ class mobileclip_s2:
         if torch.cuda.is_available():
             self.device = torch.device("cuda")
             print("Using CUDA")
-        else: 
+        else:
             self.device = torch.device("cpu")
             print("Using CPU")
         self.model.to(self.device)
         self.model.eval()
 
-        print("model loaded")
+        print("Model Loaded")
 
-    def infer(self,screenshotArg):
-        probs = []
+    def infer(self, screenshotArg, text_prompts):
+        probs = [] #Probability Values
         image_files = [screenshotArg]
-
-        text_prompts = ["Television tv advertisement break", "football soccer fifa uefa match tv sports broadcast"]
-
         for image_path in image_files:
 
             img = image_path.convert('RGB')
@@ -52,7 +49,6 @@ class mobileclip_s2:
                 text_probs = (
                     100.0 * similarity_scores.softmax(dim=-1)).squeeze(0)
 
-            print(f"Image Path: {image_path}")
             for i, text_prompt in enumerate(text_prompts):
                 print(
                     f"Similarity to '{text_prompt}': {text_probs[i].item():.2f}%")
