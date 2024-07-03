@@ -1,6 +1,8 @@
 # UniversalAdMute
 
-Automatically mute streams using OpenCLip models, currently implemented to work with Apple's MobileCLIP-S2-OpenCLIP. No notable load when running on a Ryzen 7 4800HS/GTX 1650 4GB/40GB RAM Zephyrus G14. Every second a screenshot is captured and sent to the model, which calculates it's similarity between `'Television tv advertisement break'` and `'football soccer fifa uefa match tv sports broadcast'`. Using the pycaw library, the active audio device is muted and un-muted according to defined thresholds. Usable on CPU however a longer interval would be desirable.
+Automatically mute streams using OpenCLIP models, currently implemented to work with Apple's MobileCLIP-S2-OpenCLIP. Every second a screenshot is captured and sent to the model, which calculates it's similarity between `'Television tv advertisement break'` and `'football soccer fifa uefa match tv sports broadcast'`. The active audio device is muted and un-muted according to similarity thresholds. Usable on a CPU however a longer interval would be desirable.
+
+No notable load when running on a Ryzen 7 4800HS/GTX 1650 4GB/40GB RAM Zephyrus G14. 
 
 ## Installation
 Currently implemented and tested on Windows. However, it's just the AudioController module that is platform specific.
