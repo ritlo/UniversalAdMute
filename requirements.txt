@@ -2,4 +2,5 @@ comtypes==1.4.4
 open_clip_torch==2.24.0
 Pillow==10.4.0
 pycaw==20240210
+--extra-index-url https://download.pytorch.org/whl/cu121
 torch==2.3.1+cu121
