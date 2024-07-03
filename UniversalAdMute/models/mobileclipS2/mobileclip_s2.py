@@ -60,7 +60,7 @@ class mobileclip_s2:
             with torch.no_grad():
 
                 image_features = self.model.encode_image(img_tensor)
-                image_features /= image_features.norm(dim=1, keepdim=True)
+                image_features /= image_features.norm(dim=-1, keepdim=True)
 
                 for text_prompt in text_prompts:
                     text_tensor = self.tokenizer([text_prompt]).to(self.device)
@@ -83,40 +83,6 @@ class mobileclip_s2:
                     print(f"Text Prompt: {text_prompt}")
                     print(f"Similarity Score: {similarity[0][0]:.2f}%")
 
-    # def infer2(self):
-
-    #     image_folder = 'test_imgs/input'
-    #     image_files = [os.path.join(image_folder, f) for f in os.listdir(
-    #         image_folder) if f.endswith(('.png', '.jpg', '.jpeg'))]
-
-    #     text_prompts = ["advertisement", "football match tv broadcast"]
-
-    #     for image_path in image_files:
-
-    #         img = Image.open(image_path).convert('RGB')
-    #         img_tensor = self.preprocess_val(img).unsqueeze(0).to(self.device)
-
-    #         with torch.no_grad(), torch.amp.autocast('cuda'):
-
-    #             image_features = self.model.encode_image(img_tensor)
-    #             text_features = self.model.encode_text(
-    #                 self.tokenizer(text_prompts).to(self.device))
-
-    #             image_features = image_features / \
-    #                 image_features.norm(dim=-1, keepdim=True)
-    #             text_features = text_features / \
-    #                 text_features.norm(dim=-1, keepdim=True)
-
-    #             similarity_scores = image_features @ text_features.T
-    #             text_probs = (
-    #                 100.0 * similarity_scores.softmax(dim=-1)).squeeze(0)
-
-    #         print(f"Image Path: {image_path}")
-    #         for i, text_prompt in enumerate(text_prompts):
-    #             print(
-    #                 f"Similarity to '{text_prompt}': {text_probs[i].item():.2f}%")
-    #         print("\n")
-
     def infer2(self):
 
         image_folder = 'test_imgs/input'
@@ -124,29 +90,29 @@ class mobileclip_s2:
             image_folder) if f.endswith(('.png', '.jpg', '.jpeg'))]
 
         text_prompts = ["advertisement", "football match tv broadcast"]
-        while True:
-            for image_path in image_files:
 
-                img = Image.open(image_path).convert('RGB')
-                img_tensor = self.preprocess_val(img).unsqueeze(0).to(self.device)
+        for image_path in image_files:
 
-                with torch.no_grad(), torch.amp.autocast('cuda'):
+            img = Image.open(image_path).convert('RGB')
+            img_tensor = self.preprocess_val(img).unsqueeze(0).to(self.device)
 
-                    image_features = self.model.encode_image(img_tensor)
-                    text_features = self.model.encode_text(
-                        self.tokenizer(text_prompts).to(self.device))
+            with torch.no_grad(), torch.amp.autocast('cuda'):
 
-                    image_features = image_features / \
-                        image_features.norm(dim=-1, keepdim=True)
-                    text_features = text_features / \
-                        text_features.norm(dim=-1, keepdim=True)
+                image_features = self.model.encode_image(img_tensor)
+                text_features = self.model.encode_text(
+                    self.tokenizer(text_prompts).to(self.device))
 
-                    similarity_scores = image_features @ text_features.T
-                    text_probs = (
-                        100.0 * similarity_scores.softmax(dim=-1)).squeeze(0)
+                image_features = image_features / \
+                    image_features.norm(dim=-1, keepdim=True)
+                text_features = text_features / \
+                    text_features.norm(dim=-1, keepdim=True)
 
-                print(f"Image Path: {image_path}")
-                for i, text_prompt in enumerate(text_prompts):
-                    print(
-                        f"Similarity to '{text_prompt}': {text_probs[i].item():.2f}%")
-                print("\n")
+                similarity_scores = image_features @ text_features.T
+                text_probs = (
+                    100.0 * similarity_scores.softmax(dim=-1)).squeeze(0)
+
+            print(f"Image Path: {image_path}")
+            for i, text_prompt in enumerate(text_prompts):
+                print(
+                    f"Similarity to '{text_prompt}': {text_probs[i].item():.2f}%")
+            print("\n")
