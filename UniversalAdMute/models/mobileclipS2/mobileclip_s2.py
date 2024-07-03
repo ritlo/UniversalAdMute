@@ -30,58 +30,37 @@ class mobileclip_s2:
 
         print("model loaded")
 
-    def infer(self):
-        uris = [
-            'http://images.cocodataset.org/test-stuff2017/000000024309.jpg',
-            'http://images.cocodataset.org/test-stuff2017/000000028117.jpg',
-            'http://images.cocodataset.org/test-stuff2017/000000006149.jpg',
-            'http://images.cocodataset.org/test-stuff2017/000000004954.jpg',
-            "https://ultralytics.com/images/zidane.jpg",
-            "https://i0.wp.com/becleverwithyourcash.com/wp-content/uploads/2021/08/watch_football_on_TV.jpeg",
-        ]
+    def infer(self,screenshotArg):
 
-        text_prompts = [
-            "football match",
-            "soccer match",
-            "fifa",
-            "uefa",
-            "advertisement",
-        ]
+        image_files = [screenshotArg]
 
-        output_dir = os.path.join('test_imgs', 'output')
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+        text_prompts = ["Television tv advertisement break", "football soccer fifa uefa match tv sports broadcast"]
 
-        for i, uri in enumerate(uris):
-            img = Image.open(requests.get(uri, stream=True).raw).convert("RGB")
-            img_tensor = self.preprocess_val(img).unsqueeze(0).to(
-                self.device)
+        for image_path in image_files:
 
-            with torch.no_grad():
+            img = image_path.convert('RGB')
+            img_tensor = self.preprocess_val(img).unsqueeze(0).to(self.device)
+
+            with torch.no_grad(), torch.amp.autocast('cuda'):
 
                 image_features = self.model.encode_image(img_tensor)
-                image_features /= image_features.norm(dim=-1, keepdim=True)
+                text_features = self.model.encode_text(
+                    self.tokenizer(text_prompts).to(self.device))
 
-                for text_prompt in text_prompts:
-                    text_tensor = self.tokenizer([text_prompt]).to(self.device)
-                    text_features = self.model.encode_text(text_tensor)
-                    text_features /= text_features.norm(dim=1, keepdim=True)
+                image_features = image_features / \
+                    image_features.norm(dim=-1, keepdim=True)
+                text_features = text_features / \
+                    text_features.norm(dim=-1, keepdim=True)
 
-                    similarity = (100.0 * image_features @
-                                  text_features.T).softmax(dim=-1)
+                similarity_scores = image_features @ text_features.T
+                text_probs = (
+                    100.0 * similarity_scores.softmax(dim=-1)).squeeze(0)
 
-                    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-                    filename = f"{output_dir}/image_{timestamp}_{i}_{text_prompt.replace(' ', '_')}.png"
-                    plt.imshow(img)
-                    plt.title(
-                        f"{text_prompt} Similarity: {similarity[0][0]:.2f}%")
-                    plt.axis('off')
-                    plt.savefig(filename)
-                    plt.close()
-
-                    print(f"URI: {uri}")
-                    print(f"Text Prompt: {text_prompt}")
-                    print(f"Similarity Score: {similarity[0][0]:.2f}%")
+            print(f"Image Path: {image_path}")
+            for i, text_prompt in enumerate(text_prompts):
+                print(
+                    f"Similarity to '{text_prompt}': {text_probs[i].item():.2f}%")
+            print("\n")
 
     def infer2(self):
 
