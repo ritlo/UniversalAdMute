@@ -9,5 +9,11 @@ audioCont = AudioController()
 model = mobileclip_s2()
 
 while True:
-    model.infer(simpleScreenshot())
+    probs = model.infer(simpleScreenshot())
+    if probs[1] > 51 and audioCont.isUnmuted == False:
+        audioCont.unmute()
+        
+    elif probs[0] > 50:
+        audioCont.mute()
+
     sleep(1)

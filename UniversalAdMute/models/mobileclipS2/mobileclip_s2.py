@@ -31,7 +31,7 @@ class mobileclip_s2:
         print("model loaded")
 
     def infer(self,screenshotArg):
-
+        probs = []
         image_files = [screenshotArg]
 
         text_prompts = ["Television tv advertisement break", "football soccer fifa uefa match tv sports broadcast"]
@@ -60,7 +60,9 @@ class mobileclip_s2:
             for i, text_prompt in enumerate(text_prompts):
                 print(
                     f"Similarity to '{text_prompt}': {text_probs[i].item():.2f}%")
+                probs.append(float(f"{text_probs[i].item()}"))
             print("\n")
+        return probs
 
     def infer2(self):
 
