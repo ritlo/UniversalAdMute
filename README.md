@@ -6,6 +6,9 @@ No notable load when using CUDA on a Ryzen 7 4800HS/GTX 1650 4GB/40GB RAM Zephyr
 
 Possible to run on CPU with a very significant load on the processor (32% according to Task Manager).
 
+## Run with Chrome Extension
+`uvicorn api:app --reload --host 0.0.0.0 --port 32542`
+
 ## Installation
 Currently implemented and tested on Windows. However, it's just the AudioController module that is platform specific.
 ### For CUDA (NVIDIA GPUS)

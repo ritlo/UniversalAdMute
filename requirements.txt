@@ -1,8 +1,9 @@
---extra-index-url https://download.pytorch.org/whl/cu121
-numpy==1.26.3
-torch==2.3.1+cu121
-comtypes==1.4.4
-open_clip_torch==2.24.0
-Pillow==10.4.0
+--extra-index-url https://download.pytorch.org/whl/cu128
+numpy
+torch==2.7.1+cu128
+comtypes
+open_clip_torch
+Pillow
 pycaw==20240210
+pywin32==310
 fastapi[standard]
