@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # Converting UniversalAdMute.py to threads
 import threading
 import logging
@@ -121,4 +119,3 @@ class MutingService:
             updated = True
             logger.info(f"Updated content threshold to: {self.content_threshold}")
         return updated
->>>>>>> dcfe49a (Created Chrome extension support with FastAPI backend controlling UniversalAdMute thread.)
