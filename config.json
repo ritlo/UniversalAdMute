@@ -1,0 +1,10 @@
+{
+    "text_prompts": [
+        "Television tv advertisement break",
+        "Fifa UEFA Football TV broadcast"
+    ],
+    "ad_threshold": 50,
+    "content_threshold": 51,
+    "api_host": "127.0.0.1",
+    "api_port": 32542
+}

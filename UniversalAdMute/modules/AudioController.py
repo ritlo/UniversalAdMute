@@ -7,7 +7,8 @@ class AudioController:
     def __init__(self):
         self.devices = AudioUtilities.GetSpeakers()
         self.interface = self.devices.Activate(
-            IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+            IAudioEndpointVolume._iid_, CLSCTX_ALL, None
+        )
         self.volume = self.interface.QueryInterface(IAudioEndpointVolume)
         self.muteVolume = self.volume.GetMute()
         self.currentVolume = self.volume.GetMasterVolumeLevelScalar()
@@ -18,7 +19,7 @@ class AudioController:
 
     def setVolume(self, volumeArg):
         if volumeArg > 1.0:
-            self.volume.SetMasterVolumeLevelScalar(volumeArg/100, None)
+            self.volume.SetMasterVolumeLevelScalar(volumeArg / 100, None)
         else:
             self.volume.SetMasterVolumeLevelScalar(volumeArg, None)
 
