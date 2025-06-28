@@ -7,6 +7,10 @@ No notable load when using CUDA on a Ryzen 7 4800HS/GTX 1650 4GB/40GB RAM Zephyr
 Possible to run on CPU with a very significant load on the processor (32% according to Task Manager).
 
 ## Run with Chrome Extension
+<a href=https://chromewebstore.google.com/detail/universaladmute-controlle/anigmkdhekjbfflflneamdhlclcefpch>
+<img src=https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png alt="Download from Chrome Store">
+</a>
+
 `uvicorn api:app --reload --host 0.0.0.0 --port 32542`
 
 ## Installation
